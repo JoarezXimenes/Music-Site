@@ -39,7 +39,9 @@ class Header extends React.Component {
                   activeClassName="active"
                   to="/search"
                 >
-                  Pesquisar
+                  <div>
+                    Pesquisar
+                  </div>
                 </NavLink>
                 <NavLink
                   data-testid="link-to-favorites"
