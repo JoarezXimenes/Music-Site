@@ -34,6 +34,7 @@ class Header extends React.Component {
               </div>
               <div className="navBar">
                 <NavLink
+                  data-testid="link-to-search"
                   className="navlink"
                   activeClassName="active"
                   to="/search"
@@ -41,6 +42,7 @@ class Header extends React.Component {
                   Pesquisar
                 </NavLink>
                 <NavLink
+                  data-testid="link-to-favorites"
                   activeClassName="active"
                   to="/favorites"
                   className="navlink"
@@ -48,6 +50,7 @@ class Header extends React.Component {
                   Favoritas
                 </NavLink>
                 <NavLink
+                  data-testid="link-to-profile"
                   className="navlink"
                   activeClassName="active"
                   to="/profile"
