@@ -28,10 +28,22 @@ header {
   margin-right: 5%;
 }
 
-.navLink {
-  color: black;
+.navlink {
+  align-items: center;
+  display: flex;
+  height: 8vh;
+  justify-content: center;
   text-decoration: none;
-  width: 33%;
+}
+
+.teste {
+  align-items: center;
+  color: black;
+  display: flex;
+  height: 8vh;
+  justify-content: center;
+  text-decoration: none;
+  width: 33vw;
 }
 
 .active {

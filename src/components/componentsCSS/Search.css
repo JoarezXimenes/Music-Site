@@ -1,0 +1,50 @@
+.Search {
+  height: 100vh;
+}
+
+.Search form {
+  align-items: center;
+  display: flex;
+  height: 15vh;
+  justify-content: center;
+}
+
+.Search form input {
+  height: 30px;
+  width: 30%;
+}
+
+.Search form button {
+  background-color: rgb(23, 66, 255);
+  border: none;
+  border-radius: 2px;
+  color: white;
+  height: 35px;
+  margin-left: 2%;
+  width: 100px;
+}
+
+.Search form button:hover {
+  background-color: rgb(3, 43, 223);
+}
+
+.Search form button:disabled {
+  background-color: rgba(23, 65, 255, 0.658);
+}
+
+.result {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  height: 69vh;
+  justify-content: center;
+}
+
+.albunsList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.albumCard {
+  width: 10vw;
+}

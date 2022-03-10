@@ -39,9 +39,7 @@ class Header extends React.Component {
                   activeClassName="active"
                   to="/search"
                 >
-                  <div>
-                    Pesquisar
-                  </div>
+                  <p className="teste">Pesquisar</p>
                 </NavLink>
                 <NavLink
                   data-testid="link-to-favorites"
@@ -49,7 +47,7 @@ class Header extends React.Component {
                   to="/favorites"
                   className="navlink"
                 >
-                  Favoritas
+                  <p className="teste">Favoritas</p>
                 </NavLink>
                 <NavLink
                   data-testid="link-to-profile"
@@ -57,7 +55,7 @@ class Header extends React.Component {
                   activeClassName="active"
                   to="/profile"
                 >
-                  Perfil
+                  <p className="teste">Perfil</p>
                 </NavLink>
               </div>
             </>

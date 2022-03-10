@@ -1,0 +1,26 @@
+.Login form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 15vh;
+  justify-content: center;
+}
+
+.Login form input {
+  height: 30px;
+  width: 30%;
+}
+
+.Login form button {
+  background-color: rgb(23, 66, 255);
+  border: none;
+  border-radius: 2px;
+  color: white;
+  height: 35px;
+  margin-left: 2%;
+  width: 100px;
+}
+
+.Login form button:disabled {
+  background-color: rgba(23, 65, 255, 0.658);
+}
