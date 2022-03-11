@@ -16,6 +16,7 @@ class Search extends React.Component {
       emptyAlbum: false,
       foundAlbum: false,
       albumArray: [],
+      rendAlbum: false,
     };
   }
 
@@ -37,6 +38,7 @@ class Search extends React.Component {
         emptyAlbum: true,
         load: false,
         foundAlbum: false,
+        rendAlbum: false,
       });
     } else if (albumArray.length > 0) {
       this.setState({
@@ -44,6 +46,7 @@ class Search extends React.Component {
         emptyAlbum: false,
         load: false,
         foundAlbum: true,
+        rendAlbum: true,
       });
     }
   }
@@ -70,6 +73,7 @@ class Search extends React.Component {
       emptyAlbum,
       albumArray,
       savedSearch,
+      rendAlbum,
       foundAlbum } = this.state;
     return (
       <div className="Search" data-testid="page-search">
@@ -92,33 +96,28 @@ class Search extends React.Component {
           </button>
         </form>
         <div className="result">
-          {
-            load && <Carregando />
-          }
-          {
-            foundAlbum && <h1>{`Resultado de álbuns de: ${savedSearch}`}</h1>
-          }
-          {
-            emptyAlbum ? <h1>Nenhum álbum foi encontrado</h1> : (
-              <div className="albunsList">
-                {
-                  albumArray.map((e) => (
-                    <Link
-                      to={ `/album/${e.collectionId}` }
-                      data-testid={ `link-to-album-${e.collectionId}` }
-                      key={ e.collectionId }
-                    >
-                      <div className="albumCard">
-                        <img src={ e.artworkUrl100 } alt={ e.collectionName } />
-                        <h3>{ e.collectionName }</h3>
-                        <p>{ e.artistName }</p>
-                      </div>
-                    </Link>
-                  ))
-                }
-              </div>
-            )
-          }
+          {load && <Carregando />}
+          {foundAlbum && <h1>{`Resultado de álbuns de: ${savedSearch}`}</h1>}
+          {emptyAlbum && <h1>Nenhum álbum foi encontrado</h1>}
+          {rendAlbum && (
+            <div className="albunsList">
+              {
+                albumArray.map((e) => (
+                  <Link
+                    to={ `/album/${e.collectionId}` }
+                    data-testid={ `link-to-album-${e.collectionId}` }
+                    key={ e.collectionId }
+                  >
+                    <div className="albumCard">
+                      <img src={ e.artworkUrl100 } alt={ e.collectionName } />
+                      <h3>{ e.collectionName }</h3>
+                      <p>{ e.artistName }</p>
+                    </div>
+                  </Link>
+                ))
+              }
+            </div>
+          )}
         </div>
       </div>
     );
