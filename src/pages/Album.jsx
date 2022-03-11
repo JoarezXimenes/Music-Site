@@ -51,7 +51,11 @@ class Album extends React.Component {
             {
               musicList.map((music) => (
                 <div key={ music.trackId }>
-                  <audio name={ music.trackName } data-testid="audio-component" src={ music.previewUrl } controls>
+                  <audio
+                    data-testid="audio-component"
+                    src={ music.previewUrl }
+                    controls
+                  >
                     <track kind="captions" />
                     O seu navegador não suporta o elemento
                     <code>audio</code>
