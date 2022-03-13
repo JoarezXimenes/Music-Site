@@ -1,0 +1,9 @@
+.musicCard {
+  align-items: center;
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.musicCard img {
+  border-radius: 50%;
+}
