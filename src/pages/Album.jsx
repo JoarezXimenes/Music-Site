@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getFavoriteSongs, addSong, removeSong } from '../services/favoriteSongsAPI';
 import Header from '../components/Header';
 import musicsAPI from '../services/musicsAPI';
 import MusicCard from '../components/MusicCard';
@@ -19,7 +20,7 @@ class Album extends React.Component {
 
   componentDidMount() {
     const { match: { params: { id } } } = this.props;
-    this.getAlbumInfo(id);
+    this.getAlbumInfo1(id);
   }
 
   changeLoad = () => {
@@ -27,9 +28,34 @@ class Album extends React.Component {
     this.setState({ loading: !loading });
   }
 
-  getAlbumInfo = async (id) => {
+  atualizarFav =async (musics) => {
+    const musicListAdd = musics.map((el) => {
+      el.isFav = false;
+      return el;
+    });
+    const favList = await getFavoriteSongs();
+    const modList = musicListAdd.map((e1) => {
+      favList.forEach((e2) => {
+        if (e1.trackId === e2.trackId) {
+          e1.isFav = true;
+        }
+      });
+      return e1;
+    });
+    this.setState({
+      musicList: modList,
+      loading: false,
+    });
+  }
+
+  getAlbumInfo1 = async (id) => {
     const albumInfoArray = await musicsAPI(id);
-    const item1 = albumInfoArray[0];
+    this.getAlbumInfo(albumInfoArray);
+  }
+
+  getAlbumInfo = (array) => {
+    const albumArray = array;
+    const item1 = albumArray[0];
     const fotoAlbum = item1.artworkUrl100;
     const nomeAlbum = item1.collectionName;
     const nomeArtista = item1.artistName;
@@ -38,9 +64,23 @@ class Album extends React.Component {
       albumPic: fotoAlbum,
       artistName: nomeArtista,
     }, () => {
-      const musics = albumInfoArray.filter((_elem, index) => index > 0);
-      this.setState({ musicList: musics });
+      const musics = albumArray.filter((_elem, index) => index > 0);
+      this.atualizarFav(musics);
     });
+  }
+
+  addMusic =async (obj) => {
+    const { match: { params: { id } } } = this.props;
+    this.setState({ loading: true });
+    await addSong(obj);
+    this.getAlbumInfo1(id);
+  }
+
+  remMusic =async (obj) => {
+    const { match: { params: { id } } } = this.props;
+    this.setState({ loading: true });
+    await removeSong(obj);
+    await this.getAlbumInfo1(id);
   }
 
   render() {
@@ -65,7 +105,10 @@ class Album extends React.Component {
                       previewUrl={ music.previewUrl }
                       trackId={ music.trackId }
                       trackImg={ music.artworkUrl60 }
-                      changeLoading={ this.changeLoad }
+                      check={ music.isFav }
+                      handleCheck={ this.handleCheck }
+                      addMusic={ this.addMusic }
+                      remMusic={ this.remMusic }
                     />
                   ))
                 }

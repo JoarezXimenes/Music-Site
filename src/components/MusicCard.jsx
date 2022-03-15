@@ -1,54 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getFavoriteSongs, addSong, removeSong } from '../services/favoriteSongsAPI';
 import './componentsCSS/MusicCard.css';
 
 class MusicCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isFav: false,
-    };
-  }
-
-  componentDidMount() {
-    this.getFavSongs();
-  }
-
-  handleCheck =async () => {
-    const { isFav } = this.state;
-    const { trackName, previewUrl, trackId, trackImg, changeLoading } = this.props;
+  handleCheck = ({ target }) => {
+    const { checked } = target;
+    const { trackName, previewUrl, trackId, trackImg, addMusic, remMusic } = this.props;
     const musicObj = {
       trackId,
       trackImg,
       trackName,
       previewUrl,
     };
-    if (isFav === false) {
-      this.setState({ isFav: true });
-      changeLoading();
-      await addSong(musicObj);
-      changeLoading();
-      this.getFavSongs();
-    } else if (isFav === true) {
-      this.setState({ isFav: false });
-      changeLoading();
-      await removeSong(musicObj);
-      changeLoading();
-      this.getFavSongs();
+    if (checked === false) {
+      remMusic(musicObj);
+    } else if (checked === true) {
+      addMusic(musicObj);
     }
   }
 
-  getFavSongs =async () => {
-    const { trackId } = this.props;
-    const songArray = await getFavoriteSongs();
-    const favVerify = songArray.some((e) => e.trackId === trackId);
-    this.setState({ isFav: favVerify });
-  }
-
   render() {
-    const { trackName, previewUrl, trackId, trackImg } = this.props;
-    const { isFav } = this.state;
+    const { trackName, previewUrl, trackId, trackImg, check } = this.props;
     return (
       <div className="musicCard">
         <img src={ trackImg } alt={ trackName } />
@@ -67,8 +39,9 @@ class MusicCard extends React.Component {
           <input
             type="checkbox"
             data-testid={ `checkbox-music-${trackId}` }
+            name={ trackName }
             value={ trackId }
-            checked={ isFav }
+            checked={ check }
             onChange={ this.handleCheck }
           />
         </label>
@@ -82,7 +55,9 @@ MusicCard.propTypes = {
   previewUrl: PropTypes.string.isRequired,
   trackId: PropTypes.number.isRequired,
   trackImg: PropTypes.string.isRequired,
-  changeLoading: PropTypes.func.isRequired,
+  addMusic: PropTypes.func.isRequired,
+  remMusic: PropTypes.func.isRequired,
+  check: PropTypes.bool.isRequired,
 };
 
 export default MusicCard;
